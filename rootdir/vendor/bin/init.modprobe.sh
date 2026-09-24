@@ -1,5 +1,5 @@
 #!/vendor/bin/sh
-if [ -f "/vendor/lib/modules/modules.load" ]; then
+if [ -s "/vendor/lib/modules/modules.load" ]; then
     exit 0
 fi
 
