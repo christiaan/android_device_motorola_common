@@ -6,6 +6,14 @@ fps_id=$(cat /proc/config/fps_id/ascii)
 else
 fps_id=$(cat /mnt/vendor/persist/fps/vendor_id)
 fi
+# Some devices (e.g. doha) have neither the fps_id utag nor a persisted
+# vendor_id, which silently falls through to the Egistec default below.
+# Fall back to the factory hardware descriptor, which init.oem.hw.sh
+# already exports as ro.vendor.hw.fps_id.
+if [ -z "$fps_id" ] && [ -f /proc/hw/fps_id/ascii ];
+then
+fps_id=$(cat /proc/hw/fps_id/ascii)
+fi
 
 function set_permissions() {
     if [ "$fps_id" == "chipone" ]
